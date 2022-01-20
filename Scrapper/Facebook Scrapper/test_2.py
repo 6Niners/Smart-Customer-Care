@@ -3,7 +3,7 @@ from facebook_scraper import get_posts_by_search
 from facebook_scraper import write_post_to_disk
 import pandas as pd
 
-res = get_posts_by_search( word = "vodafone",credentials= ("abdelrahmainabbas@rocketmail.com","FAR$AWAY"), page_limit=1)
+res = get_posts_by_search( word = "vodafone",credentials= ("SmartCustomerCare69@gmail.com","SixtyNine69"), page_limit=1)
 
 #print(tuple(res))
 #print(submit_form(extra_data={res}))
