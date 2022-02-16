@@ -1,0 +1,29 @@
+.logo {
+    font-weight: bold;
+    font-size: 30px;
+    color: var(--primary-color);
+}
+
+.sidebar-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--sub-title-color)
+}
+
+#sidebar .nav-link {
+    padding: 0.3rem !important;
+    color: var(--secondary--color);
+}
+
+#sidebar .nav-item {
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-active, #sidebar .nav-item:hover {
+    background-color: var(--sidebar-active-color);
+}
+
+.sidebar-icon {
+    margin-right: 0.5rem;
+}
