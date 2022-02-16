@@ -1,6 +1,6 @@
-import Topbar from "./Components/Topbar/Topbar"
-import Sidebar from "./Components/Sidebar/sidebar";
-import { colors } from "@material-ui/core";
+import Sidebar from "./Components/Sidebar/sidebar"
+import MainBody from "./Components/MainBody/mainBody"
+
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
             <Sidebar />
           </div>
           <div className="col-9">
-            <Topbar />
+            <MainBody />
           </div>
         </div>
       </div>
