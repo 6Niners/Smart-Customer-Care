@@ -1,22 +1,32 @@
 import Sidebar from "./Components/Sidebar/sidebar"
-import MainBody from "./Components/MainBody/mainBody"
+import Topbar from "./Components/Topbar/topbar"
+import Home from "./Pages/Home/home"
+import Emotion from "./Pages/Emotion/emotion"
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 
 function App() {
   return (
     
-    <div className="App">
-      <div className="container">
+    <Router>
+      <div className="App container pt-3">
         <div className="row">
           <div className="col-3">
             <Sidebar />
           </div>
+
           <div className="col-9">
-            <MainBody />
+            <Topbar />
+
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/emotion" element={<Emotion />} />
+            </Routes>
           </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
