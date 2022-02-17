@@ -1,11 +1,14 @@
 import "./home.css"
-import "../../Components/FeaturedInfo/featuredInfo"
+import Chart from "../../Components/Chart/chart"
 import FeaturedInfo from "../../Components/FeaturedInfo/featuredInfo"
 
 const Home = () => {
 
     return (
-        <FeaturedInfo />
+        <div className="">
+            <FeaturedInfo />
+            <Chart />
+        </div>
     )
 }
 

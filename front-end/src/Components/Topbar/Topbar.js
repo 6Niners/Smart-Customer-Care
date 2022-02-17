@@ -10,17 +10,17 @@ const Topbar = () => {
                 <div className="navbar-collapse ">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a href="./index.html" class="nav-link ">
+                            <a href="./index.html" className="nav-link ">
                                 <NotificationsNone />
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a href="./index.html" class="nav-link ">
+                            <a href="./index.html" className="nav-link ">
                                 <Language />
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a href="./index.html" class="nav-link ">
+                            <a href="./index.html" className="nav-link ">
                                 <Settings />
                             </a>
                         </li>
