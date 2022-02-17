@@ -6,7 +6,7 @@ const Topbar = () => {
 
     return (
          
-            <nav className="navbar navbar-light navbar-expand">
+            <nav className="navbar navbar-light navbar-expand pt-0 pt-1">
                 <div className="navbar-collapse ">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
