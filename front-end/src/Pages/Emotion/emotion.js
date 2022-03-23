@@ -10,7 +10,7 @@ const EmotionPage = () => {
         <div id="emotion-showcase">
             <div className="row">
                 <div className="col-sm-12">
-                    <div className="featuredItem">
+                    <div className="featured-item">
                         <div className="card-body">
                             <h5 className="card-title mb-4">Emotion Analyser</h5>
                             
