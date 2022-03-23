@@ -9,7 +9,7 @@ const FeaturedInfo = () => {
         <div id="featured-showcase">
             <div className="row">
                 <div className="col-sm-4">
-                    <div className="featuredItem">
+                    <div className="featured-item">
                         <div className="card-body">
                             <h5 className="card-title">Average Rating</h5>
                             <h6 className="featured-product">Vodafone</h6>
@@ -23,7 +23,7 @@ const FeaturedInfo = () => {
                 </div>
 
                 <div className="col-sm-4">
-                    <div className="featuredItem">
+                    <div className="featured-item">
                         <div className="card-body">
                             <h5 className="card-title">Average Rating</h5>
                             <h6 className="featured-product">WE</h6>
@@ -37,7 +37,7 @@ const FeaturedInfo = () => {
                 </div>
 
                 <div className="col-sm-4">
-                    <div className="featuredItem">
+                    <div className="featured-item">
                         <div className="card-body">
                             <h5 className="card-title">Average Rating</h5>
                             <h6 className="featured-product">Etisalat</h6>

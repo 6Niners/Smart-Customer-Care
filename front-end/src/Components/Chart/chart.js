@@ -69,7 +69,7 @@ const Chart = () => {
 
 
     return (
-        <div id="chart-showcase" className="featuredItem">
+        <div id="chart-showcase" className="featured-item">
             <h3 id="chart-title">Analytics</h3>
 
             <ResponsiveContainer width="100%" aspect={4 / 1}>

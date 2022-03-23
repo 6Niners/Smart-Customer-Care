@@ -2,6 +2,7 @@ import Sidebar from "./Components/Sidebar/sidebar"
 import Topbar from "./Components/Topbar/topbar"
 import Home from "./Pages/Home/home"
 import Emotion from "./Pages/Emotion/emotion"
+import Analytics from "./Pages/Analytics/analytics"
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
@@ -22,6 +23,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/emotion" element={<Emotion />} />
+              <Route path="/analytics" element={<Analytics />} />
             </Routes>
           </div>
         </div>

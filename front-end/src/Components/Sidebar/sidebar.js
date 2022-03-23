@@ -28,7 +28,7 @@ const Sidebar = () => {
                             <DashboardIcon className="sidebar-icon" /> Home</a>
                     </li>
                     <li className="nav-item">
-                        <a href="" className="nav-link">
+                        <a href="" onClick={() => {navigate("/analytics")}} className="nav-link">
                         <Timeline className="sidebar-icon" /> Analytics</a>
                     </li>
                     <li className="nav-item">
