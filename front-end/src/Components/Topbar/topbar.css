@@ -1,0 +1,12 @@
+
+.ml-auto {
+    margin-left: auto;
+}
+
+
+.profile-pic {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 1rem;
+}

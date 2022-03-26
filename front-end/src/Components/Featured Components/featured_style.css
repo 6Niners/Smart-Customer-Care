@@ -1,0 +1,47 @@
+.featured-item {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+
+.card-title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.rating-container {
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+
+
+.rating {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+
+.rating-comparison {
+    margin-left: 1.3rem;
+}
+
+
+.featured-icon {
+    color: green;
+    margin-left: 0rem;
+}
+
+.negative {
+    color: red;
+}
+
+.featured-sub {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--faint-color);
+}
