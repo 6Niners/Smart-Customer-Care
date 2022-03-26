@@ -1,8 +1,0 @@
-.btn-primary-color {
-  background-color: var(--primary-color);
-}
-
-
-.btn.btn-primary-color:hover {
-  background-color: var(--hover-color);
-}
