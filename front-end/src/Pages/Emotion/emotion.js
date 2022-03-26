@@ -1,8 +1,9 @@
 import "./emotion.css"
-import "../../Components/FeaturedInfo/featuredInfo.css"
-import { CircularProgress } from "@material-ui/core";
+
 import SearchIcon from '@material-ui/icons/Search';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+
+
 
 const EmotionPage = () => {
 
@@ -12,7 +13,7 @@ const EmotionPage = () => {
                 <div className="col-sm-12">
                     <div className="featured-item">
                         <div className="card-body">
-                            <h5 className="card-title mb-4">Emotion Analyser</h5>
+                            <h5 className="title-primary mb-4">Emotion Analyser</h5>
                             
                             <div className="row">
                                 <div className="col-sm-6">

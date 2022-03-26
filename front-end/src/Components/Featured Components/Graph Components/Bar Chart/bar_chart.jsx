@@ -1,4 +1,3 @@
-import "../featured_style.css"
 import "./bar_chart.css"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -6,9 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const Bar_Chart = ({ data }) => {
 
   return (
-    <div className="featured-itemss">
-      <h3 id="chart-title" className="mb-5 avg-bar-title-m">Weekly Average Word Length</h3>
-
+    <div id="bar-showcase">
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <BarChart
           width={500}

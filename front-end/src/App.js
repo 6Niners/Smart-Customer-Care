@@ -137,33 +137,34 @@ function App() {
         }
  
     return modes;
-}
+  }
 
 
-function count(tweet=[]) {
-  var obj = {};                      
 
-  for (var tweetIDX = 0; tweetIDX < Tweets.length; tweetIDX++){   
-    let wordArr = tweet[tweetIDX].split(" ")                           
+  function count(tweet=[]) {
+    var obj = {};                      
 
-    wordArr.forEach(function(word) {                                
-      obj[word] = obj[word] ? ++obj[word] : 1;             
+    for (var tweetIDX = 0; tweetIDX < Tweets.length; tweetIDX++){   
+      let wordArr = tweet[tweetIDX].split(" ")                           
+
+      wordArr.forEach(function(word) {                                
+        obj[word] = obj[word] ? ++obj[word] : 1;             
+      });
+    }
+    
+    var sortable = [];                                              
+      for (var word in obj) {
+        sortable.push([word, obj[word]]);       
+    }
+
+    sortable.sort(function(a, b) {                                  
+      return b[1]-a[1];
     });
+
+    var Top10 = sortable.slice(0, 10);                              
+
+    return Top10;
   }
-  
-  var sortable = [];                                              
-    for (var word in obj) {
-      sortable.push([word, obj[word]]);       
-  }
-
-  sortable.sort(function(a, b) {                                  
-    return b[1]-a[1];
-  });
-
-  var Top10 = sortable.slice(0, 10);                              
-
-  return Top10;
-}
 
 
 
@@ -190,13 +191,12 @@ function count(tweet=[]) {
   }
   
 
-  
-
 
   useEffect(() => {
     updateAggregationValues(postTextList)
     console.log(count(Tweets))
   }, [])
+
 
 
   return (
@@ -212,10 +212,10 @@ function count(tweet=[]) {
             <Topbar />
 
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/analytics" element={<Home />} />
               <Route path="/emotion" element={<Emotion />} />
-              <Route path="/analytics" element={<Analytics aggCardState={aggregationCardState}
-                                                           weeklyAvgList={weeklyAvgTextLength}  />} />
+              <Route path="/" element={<Analytics aggCardState={aggregationCardState}
+                                                  weeklyAvgList={weeklyAvgTextLength}  />} />
             </Routes>
           </div>
         </div>
