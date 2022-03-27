@@ -11,10 +11,21 @@ const Analytics = ({ aggCardState, weeklyAvgList }) => {
     <div id="analytics-showcase">
       <div id="aggregation-showcase">
         <div className="row">
-          <div className="col-4">
+          <div className="col-3">
+            <div className="featured-item">    
+              <Aggregation_Card 
+                  Title={aggCardState[3]["title"]} 
+                  Aggregation={aggCardState[3]["aggregation"]} 
+                  Rating={aggCardState[3]["rating"]} 
+                  Update_Rate="Daily" 
+              />
+            </div>
+          </div>
+
+          <div className="col-3">
             <div className="featured-item">
               <Aggregation_Card 
-                  Title="Post Length" 
+                  Title={aggCardState[0]["title"]} 
                   Aggregation={aggCardState[0]["aggregation"]}
                   Rating={aggCardState[0]["rating"]}
                   Update_Rate="Daily" 
@@ -22,10 +33,10 @@ const Analytics = ({ aggCardState, weeklyAvgList }) => {
             </div>
           </div>
 
-          <div className="col-4">
+          <div className="col-3">
             <div className="featured-item">
               <Aggregation_Card 
-                  Title="Post Length" 
+                  Title={aggCardState[1]["title"]} 
                   Aggregation={aggCardState[1]["aggregation"]}
                   Rating={aggCardState[1]["rating"]}
                   Update_Rate="Daily" 
@@ -33,10 +44,10 @@ const Analytics = ({ aggCardState, weeklyAvgList }) => {
             </div>
           </div>
 
-          <div className="col-4">
+          <div className="col-3">
             <div className="featured-item">    
               <Aggregation_Card 
-                  Title="Post Length" 
+                  Title={aggCardState[2]["title"]} 
                   Aggregation={aggCardState[2]["aggregation"]} 
                   Rating={aggCardState[2]["rating"]} 
                   Update_Rate="Daily" 

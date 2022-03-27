@@ -14,20 +14,58 @@ function App() {
 
   const [aggregationCardState, setAggregationCardState] = useState([
     {
+      title : "Post Length",
       aggregation : "Average",
       rating : 0
     },
 
     {
+      title : "Post Length",
       aggregation : "Median",
       rating : 0
     },
 
     {
+      title : "Post Length",
       aggregation : "Mode",
       rating : 0
     },
+
+    {
+      title : "Number of Posts",
+      aggregation : "Activity",
+      rating : 0
+    }
   ])
+
+
+
+  const oldAggregationCardState = [
+    {
+      title : "Post Length",
+      aggregation : "Average",
+      rating : 0
+    },
+
+    {
+      title : "Post Length",
+      aggregation : "Median",
+      rating : 0
+    },
+
+    {
+      title : "Post Length",
+      aggregation : "Mode",
+      rating : 0
+    },
+
+    {
+      title : "Number of Posts",
+      aggregation : "Activity",
+      rating : 0
+    }
+  ] 
+
 
 
   let weeklyAvgTextLength = [
@@ -141,7 +179,7 @@ function App() {
 
 
 
-  function count(tweet=[]) {
+  function getTop10(tweet=[]) {
     var obj = {};                      
 
     for (var tweetIDX = 0; tweetIDX < Tweets.length; tweetIDX++){   
@@ -170,22 +208,27 @@ function App() {
 
   const updateAggregationValues = (_postTextList) => {
 
+    let postsCount = _postTextList.length
     let avgLength = getAveragePostLength(_postTextList)
     let medianLength = getMedianPostLength(_postTextList)
     let modeLength = getModePostLength(_postTextList)
 
     let tempState = [...aggregationCardState]
+
     let tempAvg = {...tempState[0]}
     let tempMedian = {...tempState[1]}
     let tempMode = {...tempState[2]}
+    let tempCount = {...tempState[3]}
 
     tempAvg.rating = avgLength
     tempMedian.rating = medianLength
     tempMode.rating = modeLength
+    tempCount.rating = postsCount
 
     tempState[0] = tempAvg
     tempState[1] = tempMedian
     tempState[2] = tempMode
+    tempState[3] = tempCount
 
     setAggregationCardState(tempState) 
   }
@@ -194,7 +237,7 @@ function App() {
 
   useEffect(() => {
     updateAggregationValues(postTextList)
-    console.log(count(Tweets))
+    
   }, [])
 
 
@@ -204,11 +247,11 @@ function App() {
     <Router>
       <div className="App container pt-3">
         <div className="row">
-          <div className="col-3">
+          <div className="col-2">
             <Sidebar />
           </div>
 
-          <div className="col-9">
+          <div className="col-10">
             <Topbar />
 
             <Routes>
