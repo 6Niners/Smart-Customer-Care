@@ -19,17 +19,20 @@
 
 
 .rating-comparison {
+  display: flex;
   margin-left: 1.3rem;
+  font-size: 17px;
 }
 
 
-.featured-icon {
+.positive-arrow {
   color: green;
-  margin-left: 0rem;
+  margin-left: 0.3rem;
 }
 
-.negative {
+.negative-arrow {
   color: red;
+  margin-left: 0.3rem;
 }
 
 .featured-sub {

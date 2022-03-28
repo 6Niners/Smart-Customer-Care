@@ -44,25 +44,25 @@ function App() {
     {
       title : "Post Length",
       aggregation : "Average",
-      rating : 0
+      rating : 7
     },
 
     {
       title : "Post Length",
       aggregation : "Median",
-      rating : 0
+      rating : 2
     },
 
     {
       title : "Post Length",
       aggregation : "Mode",
-      rating : 0
+      rating : 3
     },
 
     {
       title : "Number of Posts",
-      aggregation : "Activity",
-      rating : 0
+      aggregation : "Count",
+      rating : 10
     }
   ] 
 
@@ -122,7 +122,7 @@ function App() {
 
     let lengthList = _postTextList.map(_text => _text.split(" ").length)
     
-    return median(lengthList)
+    return Math.round(median(lengthList))
   }
 
 
@@ -132,7 +132,7 @@ function App() {
     let lengthList = _postTextList.map(_text => _text.split(" ").length)
     let modeList = mode(lengthList)
 
-    return modeList.length != 1 ? "No Mode" : modeList
+    return modeList.length != 1 ? 0 : Math.round(modeList)
   }
 
 
@@ -179,10 +179,38 @@ function App() {
 
 
 
+  const getStateDifference = (_aggregation, _oldState, _newState) => {
+
+    let oldValue = 0
+    let newValue = 0
+
+    for (let i = 0; i < _oldState.length; i++) {
+
+      let oldObj = _oldState[i]
+      let newObj = _newState[i] 
+      let trueAggValue = oldObj["aggregation"]
+      
+      if (trueAggValue === _aggregation) {
+        console.log("i made it here")
+        oldValue = oldObj["rating"]
+        newValue = newObj["rating"]
+        
+        break
+      }
+    }
+
+    let difference = Math.round(newValue - oldValue)
+
+    return  difference > 0 ? "+" + difference : difference 
+
+  }
+
+
+
   function getTop10(tweet=[]) {
     var obj = {};                      
 
-    for (var tweetIDX = 0; tweetIDX < Tweets.length; tweetIDX++){   
+    for (var tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
       let wordArr = tweet[tweetIDX].split(" ")                           
 
       wordArr.forEach(function(word) {                                
@@ -258,7 +286,9 @@ function App() {
               <Route path="/analytics" element={<Home />} />
               <Route path="/emotion" element={<Emotion />} />
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
-                                                  weeklyAvgList={weeklyAvgTextLength}  />} />
+                                                  oldAggCardState={oldAggregationCardState}
+                                                  weeklyAvgList={weeklyAvgTextLength}
+                                                  comparisonFunc={getStateDifference}  />} />
             </Routes>
           </div>
         </div>
