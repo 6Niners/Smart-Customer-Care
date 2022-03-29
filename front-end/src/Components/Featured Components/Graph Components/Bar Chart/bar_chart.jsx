@@ -2,7 +2,7 @@ import "./bar_chart.css"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
-const Bar_Chart = ({ data }) => {
+const Bar_Chart = ({ data, xAxis, yAxis }) => {
 
   return (
     <div id="bar-showcase">
@@ -19,12 +19,12 @@ const Bar_Chart = ({ data }) => {
           }}
           barSize={20}
         >
-          <XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+          <XAxis dataKey={xAxis} scale="point" padding={{ left: 10, right: 10 }} />
           <YAxis />
           <Tooltip />
           <Legend />
           <CartesianGrid strokeDasharray="3 3" />
-          <Bar dataKey="avgLength" animationDuration={2000} fill="#8884d8" background={{ fill: '#eee' }} />
+          <Bar dataKey={yAxis} animationDuration={2000} fill="#8884d8" background={{ fill: '#eee' }} />
         </BarChart>
       </ResponsiveContainer>
     </div>

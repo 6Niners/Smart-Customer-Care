@@ -5,7 +5,8 @@ import Bar_Chart from "../../Components/Featured Components/Graph Components/Bar
 
 
 
-const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, comparisonFunc }) => {
+
+const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, comparisonFunc, }) => {
 
   let countComparison = comparisonFunc("Count", oldAggCardState, aggCardState)
   let avgComparison = comparisonFunc("Average", oldAggCardState, aggCardState)
@@ -71,10 +72,20 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, comparisonFun
         <div className="row">
           <div className="col-12">
             <h3 className="title-primary">Weekly Average Length</h3>
-            <Bar_Chart data={weeklyAvgList}/>
+            <Bar_Chart data={weeklyAvgList} xAxis='name' yAxis='avgLength'/>
           </div>
         </div>
       </div>
+      
+      <div id="avg-length-bar-showcase" className="featured-item">
+        <div className="row">
+          <div className="col-12">
+            <h3 className="title-primary">Top10 Mentioned Words</h3>
+            <Bar_Chart data={top10List} xAxis='word' yAxis='occurences'/>
+          </div>
+        </div>
+      </div>
+
 
     </div>
   )

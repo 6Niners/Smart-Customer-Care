@@ -97,7 +97,9 @@ function App() {
       name: 'Sat',
       avgLength : 8
     },
-  ];
+  ]
+  
+  
   
 
 
@@ -106,8 +108,9 @@ function App() {
 
   const postTextList = ["hello there bro", "nice weather were having", "get me OUT, GET ME OUTTT!!", "extra extra read all about it bruvv, nvm im just existing"]
 
-  var Tweets = ['wow vodaphone is bad bad bad bad bad', 'lol vodaphone is bad good good good shit good', 'league league XDXDXD vodaphone is best best best best best best best best best best best best best best best best best best best best best best best best best best best best', 'vodaphone was really shit man i hated vodaphone so much because league of legends is a lot more fun'] 
+  const Tweets = ['wow vodaphone vodaphone vodaphone good bad good bad bad bad bad bad', 'lol vodaphone bad good good good wow vodaphone good', 'helpful helpful helpful vodaphone best best best best best best best best best best', 'vodaphone was really wow wow lol man i hated vodaphone so much because league of legends a lot more is is is is is fun']
 
+  let top10Words = getTop10(Tweets)
   const getAveragePostLength = (_postTextList) => { 
 
     let totalLength = _postTextList.reduce(
@@ -149,88 +152,97 @@ function App() {
     } else { // is odd
         // middle number only
         median = numbers[(numsLen - 1) / 2];
+      }
+      
+      return median;
     }
- 
-    return median;
-  }
-
-
-
-  function mode(numbers) {
-    var modes = [], count = [], i, number, maxIndex = 0;
- 
-    for (i = 0; i < numbers.length; i += 1) {
+    
+    
+    
+    function mode(numbers) {
+      var modes = [], count = [], i, number, maxIndex = 0;
+      
+      for (i = 0; i < numbers.length; i += 1) {
         number = numbers[i];
         count[number] = (count[number] || 0) + 1;
         if (count[number] > maxIndex) {
-            maxIndex = count[number];
+          maxIndex = count[number];
         }
-    }
- 
-    for (i in count)
-        if (count.hasOwnProperty(i)) {
-            if (count[i] === maxIndex) {
-                modes.push(Number(i));
-            }
-        }
- 
-    return modes;
-  }
-
-
-
-  const getStateDifference = (_aggregation, _oldState, _newState) => {
-
-    let oldValue = 0
-    let newValue = 0
-
-    for (let i = 0; i < _oldState.length; i++) {
-
-      let oldObj = _oldState[i]
-      let newObj = _newState[i] 
-      let trueAggValue = oldObj["aggregation"]
-      
-      if (trueAggValue === _aggregation) {
-        console.log("i made it here")
-        oldValue = oldObj["rating"]
-        newValue = newObj["rating"]
-        
-        break
       }
-    }
-
-    let difference = Math.round(newValue - oldValue)
-
-    return  difference > 0 ? "+" + difference : difference 
-
-  }
-
-
-
-  function getTop10(tweet=[]) {
-    var obj = {};                      
-
-    for (var tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
-      let wordArr = tweet[tweetIDX].split(" ")                           
-
-      wordArr.forEach(function(word) {                                
-        obj[word] = obj[word] ? ++obj[word] : 1;             
-      });
+      
+      for (i in count)
+      if (count.hasOwnProperty(i)) {
+        if (count[i] === maxIndex) {
+          modes.push(Number(i));
+        }
+      }
+      
+      return modes;
     }
     
-    var sortable = [];                                              
-      for (var word in obj) {
-        sortable.push([word, obj[word]]);       
+    
+    
+    const getStateDifference = (_aggregation, _oldState, _newState) => {
+      
+      let oldValue = 0
+      let newValue = 0
+      
+      for (let i = 0; i < _oldState.length; i++) {
+        
+        let oldObj = _oldState[i]
+        let newObj = _newState[i] 
+        let trueAggValue = oldObj["aggregation"]
+        
+        if (trueAggValue === _aggregation) {
+          console.log("i made it here")
+          oldValue = oldObj["rating"]
+          newValue = newObj["rating"]
+          
+          break
+        }
+      }
+      
+      let difference = Math.round(newValue - oldValue)
+      
+      return  difference > 0 ? "+" + difference : difference 
+      
     }
+    
+    
+    
+    function getTop10(tweet=[]) {
+      let obj = {};                      
+      let sortable = [];                                              
+      
+      for (let tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
+        let wordArr = tweet[tweetIDX].split(" ")                            
+        
+        wordArr.forEach(function(word) {                                
+          obj[word] = obj[word] ? ++obj[word] : 1;                      
+        });
+      }
+      
+      for (let word in obj) {
+        sortable.push([word, obj[word]]);      
+      }
+      
+      sortable.sort(function(a, b) {                                 
+        return b[1]-a[1];
+      });
 
-    sortable.sort(function(a, b) {                                  
-      return b[1]-a[1];
-    });
 
-    var Top10 = sortable.slice(0, 10);                              
+      let Top10 = sortable.slice(0, 10);                              
+      
+      for(let arrIDX = 0; arrIDX < 10; arrIDX++){  
 
-    return Top10;
-  }
+        Top10[arrIDX] = Object.assign({'word':Top10[arrIDX][0],'occurences':Top10[arrIDX][1]});
+      }
+      
+      return Top10;
+    }
+  
+  
+
 
 
 
@@ -288,6 +300,7 @@ function App() {
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
                                                   oldAggCardState={oldAggregationCardState}
                                                   weeklyAvgList={weeklyAvgTextLength}
+                                                  top10List={top10Words}
                                                   comparisonFunc={getStateDifference}  />} />
             </Routes>
           </div>
