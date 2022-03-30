@@ -114,6 +114,7 @@ function App() {
   let top10Words = getTop10(Tweets)
 
   let SentimentScore = getSentimentScore(sentimentTweets)
+  
 
   const getAveragePostLength = (_postTextList) => { 
 
