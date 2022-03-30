@@ -110,7 +110,8 @@ function App() {
 
   const Tweets = ['wow vodaphone vodaphone vodaphone good bad good bad bad bad bad bad', 'lol vodaphone bad good good good wow vodaphone good', 'helpful helpful helpful vodaphone best best best best best best best best best best', 'vodaphone was really wow wow lol man i hated vodaphone so much because league of legends a lot more is is is is is fun']
 
-  let top10Words = getTop10(Tweets)
+  
+
   const getAveragePostLength = (_postTextList) => { 
 
     let totalLength = _postTextList.reduce(
@@ -273,7 +274,7 @@ function App() {
     setAggregationCardState(tempState) 
   }
   
-
+  let top10Words = getTop10(Tweets)
 
   useEffect(() => {
     updateAggregationValues(postTextList)
