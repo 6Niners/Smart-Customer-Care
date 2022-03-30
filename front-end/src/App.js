@@ -105,12 +105,16 @@ function App() {
 
 // -----------------------------------------------------------------------------
 
+  const sentimentTweets = ['positive','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative']
 
   const postTextList = ["hello there bro", "nice weather were having", "get me OUT, GET ME OUTTT!!", "extra extra read all about it bruvv, nvm im just existing"]
 
   const Tweets = ['wow vodaphone vodaphone vodaphone good bad good bad bad bad bad bad', 'lol vodaphone bad good good good wow vodaphone good', 'helpful helpful helpful vodaphone best best best best best best best best best best', 'vodaphone was really wow wow lol man i hated vodaphone so much because league of legends a lot more is is is is is fun']
 
   let top10Words = getTop10(Tweets)
+
+  let SentimentScore = getSentimentScore(sentimentTweets)
+
   const getAveragePostLength = (_postTextList) => { 
 
     let totalLength = _postTextList.reduce(
@@ -240,6 +244,21 @@ function App() {
       
       return Top10;
     }
+
+
+
+    function getSentimentScore(tweet=[]) {
+      let counter = 0;
+      
+      for (var sentimentIDX = 0; sentimentIDX < tweet.length; sentimentIDX++){
+          if (tweet[sentimentIDX] == 'positive'){
+              counter++
+          }
+      }
+      return (counter / tweet.length) * 100
+    } 
+
+
   
   
 
@@ -296,7 +315,7 @@ function App() {
 
             <Routes>
               <Route path="/analytics" element={<Home />} />
-              <Route path="/emotion" element={<Emotion />} />
+              <Route path="/emotion" element={<Emotion CircularBar = {SentimentScore}/>} />
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
                                                   oldAggCardState={oldAggregationCardState}
                                                   weeklyAvgList={weeklyAvgTextLength}

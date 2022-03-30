@@ -2,10 +2,11 @@ import "./emotion.css"
 
 import SearchIcon from '@material-ui/icons/Search';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import ProgressBar from "../../Components/Featured Components/Progress Bar/progress_bar";
 
 
 
-const EmotionPage = () => {
+const EmotionPage = ({CircularBar},) => {
 
     return (
         <div id="emotion-showcase">
@@ -14,6 +15,7 @@ const EmotionPage = () => {
                     <div className="featured-item">
                         <div className="card-body">
                             <h5 className="title-primary mb-4">Emotion Analyser</h5>
+
                             
                             <div className="row">
                                 <div className="col-sm-6">
@@ -41,7 +43,8 @@ const EmotionPage = () => {
                                 </div>
 
                                 <div className="col-sm-6">
-                                    <div id="emotion-right">
+                                    <div id="progress-bar">
+                                        <ProgressBar data = {CircularBar}/>
                                        
                                     </div>
                                 </div>
