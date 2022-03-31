@@ -1,7 +1,7 @@
 import "./analytics.css"
 import Aggregation_Card from "../../Components/Featured Components/Aggregation Card/aggregation_card"
 import Bar_Chart from "../../Components/Featured Components/Graph Components/Bar Chart/bar_chart"
-
+import LineGraph from "../../Components/Featured Components/Graph Components/Line Graph/line_graph"
 
 
 
@@ -72,7 +72,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
         <div className="row">
           <div className="col-12">
             <h3 className="title-primary">Weekly Average Length</h3>
-            <Bar_Chart data={weeklyAvgList} xAxis='name' yAxis='avgLength'/>
+            <LineGraph data={weeklyAvgList} xAxis='name' yAxis='avgLength'/>
           </div>
         </div>
       </div>

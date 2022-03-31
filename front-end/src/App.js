@@ -3,14 +3,19 @@ import Topbar from "./Components/Topbar/topbar"
 import Home from "./Pages/Home/home"
 import Emotion from "./Pages/Emotion/emotion"
 import Analytics from "./Pages/Analytics/analytics"
+import firestoreDB  from "./Api/firebase"
 
+import { collection, doc, Firestore, getDocs, getDoc, onSnapshot, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { FirebaseError } from "firebase/app"
 
 
 function App() {
+ 
 
   // States:- //
+  const [top10Words, setTop10Words] = useState([])
 
   const [aggregationCardState, setAggregationCardState] = useState([
     {
@@ -40,32 +45,34 @@ function App() {
 
 
 
-  const oldAggregationCardState = [
+  const [oldAggregationCardState, setOldAggregationCardState] = useState([
     {
       title : "Post Length",
       aggregation : "Average",
-      rating : 7
+      rating : 0
     },
 
     {
       title : "Post Length",
       aggregation : "Median",
-      rating : 2
+      rating : 0
     },
 
     {
       title : "Post Length",
       aggregation : "Mode",
-      rating : 3
+      rating : 0
     },
 
     {
       title : "Number of Posts",
       aggregation : "Count",
-      rating : 10
+      rating : 0
     }
-  ] 
+  ])
 
+
+  
 
 
   let weeklyAvgTextLength = [
@@ -111,10 +118,11 @@ function App() {
 
   const Tweets = ['wow vodaphone vodaphone vodaphone good bad good bad bad bad bad bad', 'lol vodaphone bad good good good wow vodaphone good', 'helpful helpful helpful vodaphone best best best best best best best best best best', 'vodaphone was really wow wow lol man i hated vodaphone so much because league of legends a lot more is is is is is fun']
 
-  let top10Words = getTop10(Tweets)
+  
 
   let SentimentScore = getSentimentScore(sentimentTweets)
   
+
 
   const getAveragePostLength = (_postTextList) => { 
 
@@ -198,8 +206,7 @@ function App() {
         let newObj = _newState[i] 
         let trueAggValue = oldObj["aggregation"]
         
-        if (trueAggValue === _aggregation) {
-          console.log("i made it here")
+        if (trueAggValue === _aggregation) { 
           oldValue = oldObj["rating"]
           newValue = newObj["rating"]
           
@@ -222,8 +229,11 @@ function App() {
       for (let tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
         let wordArr = tweet[tweetIDX].split(" ")                            
         
-        wordArr.forEach(function(word) {                                
-          obj[word] = obj[word] ? ++obj[word] : 1;                      
+        wordArr.forEach(function(word) {   
+          if(word !== "") {
+
+            obj[word] = obj[word] ? ++obj[word] : 1;                      
+          }                             
         });
       }
       
@@ -234,7 +244,6 @@ function App() {
       sortable.sort(function(a, b) {                                 
         return b[1]-a[1];
       });
-
 
       let Top10 = sortable.slice(0, 10);                              
       
@@ -260,13 +269,26 @@ function App() {
     } 
 
 
+
+    async function getScrappedData(_collectionName, _documentName) {
+
+      let scrappedDoc = doc(firestoreDB, _collectionName, _documentName)
+      const scrappedDocSnap = await getDoc(scrappedDoc);
+
+      if (scrappedDocSnap.exists()) {
+        console.log("Document data:", scrappedDocSnap.data());
+        return scrappedDocSnap.data()
+
+      } else {
+        console.log("No such document!");
+        return false
+      }
   
-  
+  }
 
 
 
-
-  const updateAggregationValues = (_postTextList) => {
+  const updateAggregationValues = (_postTextList, setStateFunc) => {
 
     let postsCount = _postTextList.length
     let avgLength = getAveragePostLength(_postTextList)
@@ -290,14 +312,41 @@ function App() {
     tempState[2] = tempMode
     tempState[3] = tempCount
 
-    setAggregationCardState(tempState) 
+    setStateFunc(tempState) 
   }
   
 
+  const updateCardUI = (newData, oldData) => {
 
-  useEffect(() => {
-    updateAggregationValues(postTextList)
-    
+    if (newData) {
+      let newTweetsArray = Object.values(newData.Tweet)
+      let oldTweetsArray = Object.values(oldData.Tweet)
+      
+      updateAggregationValues(newTweetsArray, setAggregationCardState)
+      updateAggregationValues(oldTweetsArray, setOldAggregationCardState)
+    }
+    else {
+      updateAggregationValues([], setAggregationCardState)
+      updateAggregationValues([], setOldAggregationCardState)
+    }
+  }
+
+
+
+  const updateTop10Values = (_data) => {
+    let newTweetsArray = Object.values(_data.Tweet) 
+    setTop10Words(getTop10(newTweetsArray))
+  }
+
+
+
+  useEffect( async () => {
+    let currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
+    let oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
+
+    updateCardUI(currentScrappedData, oldScrappedData)
+    updateTop10Values(currentScrappedData)
+
   }, [])
 
 
@@ -316,7 +365,7 @@ function App() {
 
             <Routes>
               <Route path="/analytics" element={<Home />} />
-              <Route path="/emotion" element={<Emotion CircularBar = {SentimentScore}/>} />
+              <Route path="/emotion" element={<Emotion CircularBar={SentimentScore}/>} />
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
                                                   oldAggCardState={oldAggregationCardState}
                                                   weeklyAvgList={weeklyAvgTextLength}
