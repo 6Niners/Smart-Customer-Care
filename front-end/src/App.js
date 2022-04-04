@@ -112,7 +112,7 @@ function App() {
 
 // -----------------------------------------------------------------------------
 
-  const sentimentTweets = ['positive','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative']
+  const sentimentTweets = ['positive','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative', 'positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive',]
 
   const postTextList = ["hello there bro", "nice weather were having", "get me OUT, GET ME OUTTT!!", "extra extra read all about it bruvv, nvm im just existing"]
 
