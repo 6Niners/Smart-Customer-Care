@@ -6,14 +6,9 @@ import LineGraph from "../../Components/Featured Components/Graph Components/Lin
 
 
 
-const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, comparisonFunc, }) => {
+const Analytics = ({ aggCardState, weeklyAvgList, top10State, dailyComparisonState }) => {
 
-  let countComparison = comparisonFunc("Count", oldAggCardState, aggCardState)
-  let avgComparison = comparisonFunc("Average", oldAggCardState, aggCardState)
-  let medianComparison = comparisonFunc("Median", oldAggCardState, aggCardState)
-  let modeComparison = comparisonFunc("Mode", oldAggCardState, aggCardState)
   
-
   return (
     <div id="analytics-showcase">
       <div id="aggregation-showcase">
@@ -24,7 +19,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
                   Title={aggCardState[3]["title"]} 
                   Aggregation={aggCardState[3]["aggregation"]} 
                   Rating={aggCardState[3]["rating"]}
-                  Comparison={countComparison} 
+                  comparisonValue={dailyComparisonState["count"]} 
                   Update_Rate="Daily" 
               />
             </div>
@@ -36,7 +31,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
                   Title={aggCardState[0]["title"]} 
                   Aggregation={aggCardState[0]["aggregation"]}
                   Rating={aggCardState[0]["rating"]}
-                  Comparison={avgComparison}
+                  comparisonValue={dailyComparisonState["average"]}
                   Update_Rate="Daily" 
               />
             </div>
@@ -48,7 +43,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
                   Title={aggCardState[1]["title"]} 
                   Aggregation={aggCardState[1]["aggregation"]}
                   Rating={aggCardState[1]["rating"]}
-                  Comparison={medianComparison}
+                  comparisonValue={dailyComparisonState["median"]}
                   Update_Rate="Daily" 
               />  
             </div>
@@ -60,7 +55,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
                   Title={aggCardState[2]["title"]} 
                   Aggregation={aggCardState[2]["aggregation"]} 
                   Rating={aggCardState[2]["rating"]}
-                  Comparison={modeComparison} 
+                  comparisonValue={dailyComparisonState["mode"]} 
                   Update_Rate="Daily" 
               />
             </div>
@@ -81,7 +76,7 @@ const Analytics = ({ aggCardState, oldAggCardState, weeklyAvgList, top10List, co
         <div className="row">
           <div className="col-12">
             <h3 className="title-primary">Top10 Mentioned Words</h3>
-            <Bar_Chart data={top10List} xAxis='word' yAxis='occurences'/>
+            <Bar_Chart data={top10State} xAxis='word' yAxis='occurences'/>
           </div>
         </div>
       </div>

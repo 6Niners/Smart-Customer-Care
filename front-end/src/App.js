@@ -15,7 +15,18 @@ function App() {
  
 
   // States:- //
-  const [top10Words, setTop10Words] = useState([])
+  const [sentimentScoreState, setSentimentScoreState] = useState(0)
+
+  const [top10WordsState, setTop10WordsState] = useState([])
+
+  const [dailyComparisonState, setDailyComparisonState] = useState(
+    {
+      average : 0,
+      median  : 0,
+      mode    : 0,
+      count   : 0
+    }
+  )
 
   const [aggregationCardState, setAggregationCardState] = useState([
     {
@@ -38,7 +49,7 @@ function App() {
 
     {
       title : "Number of Posts",
-      aggregation : "Activity",
+      aggregation : "Count",
       rating : 0
     }
   ])
@@ -71,8 +82,6 @@ function App() {
     }
   ])
 
-
-  
 
 
   let weeklyAvgTextLength = [
@@ -111,18 +120,6 @@ function App() {
 
 
 // -----------------------------------------------------------------------------
-
-  const sentimentTweets = ['positive','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative','negative', 'positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive','positive',]
-
-  const postTextList = ["hello there bro", "nice weather were having", "get me OUT, GET ME OUTTT!!", "extra extra read all about it bruvv, nvm im just existing"]
-
-  const Tweets = ['wow vodaphone vodaphone vodaphone good bad good bad bad bad bad bad', 'lol vodaphone bad good good good wow vodaphone good', 'helpful helpful helpful vodaphone best best best best best best best best best best', 'vodaphone was really wow wow lol man i hated vodaphone so much because league of legends a lot more is is is is is fun']
-
-  
-
-  let SentimentScore = getSentimentScore(sentimentTweets)
-  
-
 
   const getAveragePostLength = (_postTextList) => { 
 
@@ -172,128 +169,130 @@ function App() {
     
     
     
-    function mode(numbers) {
-      var modes = [], count = [], i, number, maxIndex = 0;
-      
-      for (i = 0; i < numbers.length; i += 1) {
-        number = numbers[i];
-        count[number] = (count[number] || 0) + 1;
-        if (count[number] > maxIndex) {
-          maxIndex = count[number];
-        }
+  function mode(numbers) {
+    var modes = [], count = [], i, number, maxIndex = 0;
+    
+    for (i = 0; i < numbers.length; i += 1) {
+      number = numbers[i];
+      count[number] = (count[number] || 0) + 1;
+      if (count[number] > maxIndex) {
+        maxIndex = count[number];
       }
-      
-      for (i in count)
-      if (count.hasOwnProperty(i)) {
-        if (count[i] === maxIndex) {
-          modes.push(Number(i));
-        }
-      }
-      
-      return modes;
     }
     
-    
-    
-    const getStateDifference = (_aggregation, _oldState, _newState) => {
-      
-      let oldValue = 0
-      let newValue = 0
-      
-      for (let i = 0; i < _oldState.length; i++) {
-        
-        let oldObj = _oldState[i]
-        let newObj = _newState[i] 
-        let trueAggValue = oldObj["aggregation"]
-        
-        if (trueAggValue === _aggregation) { 
-          oldValue = oldObj["rating"]
-          newValue = newObj["rating"]
-          
-          break
-        }
+    for (i in count)
+    if (count.hasOwnProperty(i)) {
+      if (count[i] === maxIndex) {
+        modes.push(Number(i));
       }
-      
-      let difference = Math.round(newValue - oldValue)
-      
-      return  difference > 0 ? "+" + difference : difference 
-      
     }
     
-    
-    
-    function getTop10(tweet=[]) {
-      let obj = {};                      
-      let sortable = [];                                              
-      
-      for (let tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
-        let wordArr = tweet[tweetIDX].split(" ")                            
-        
-        wordArr.forEach(function(word) {   
-          if(word !== "") {
-
-            obj[word] = obj[word] ? ++obj[word] : 1;                      
-          }                             
-        });
-      }
-      
-      for (let word in obj) {
-        sortable.push([word, obj[word]]);      
-      }
-      
-      sortable.sort(function(a, b) {                                 
-        return b[1]-a[1];
-      });
-
-      let Top10 = sortable.slice(0, 10);                              
-      
-      for(let arrIDX = 0; arrIDX < 10; arrIDX++){  
-
-        Top10[arrIDX] = Object.assign({'word':Top10[arrIDX][0],'occurences':Top10[arrIDX][1]});
-      }
-      
-      return Top10;
-    }
-
-
-
-    function getSentimentScore(tweet=[]) {
-      let counter = 0;
-      
-      for (var sentimentIDX = 0; sentimentIDX < tweet.length; sentimentIDX++){
-          if (tweet[sentimentIDX] == 'positive'){
-              counter++
-          }
-      }
-      return (counter / tweet.length) * 100
-    } 
-
-
-
-    async function getScrappedData(_collectionName, _documentName) {
-
-      let scrappedDoc = doc(firestoreDB, _collectionName, _documentName)
-      const scrappedDocSnap = await getDoc(scrappedDoc);
-
-      if (scrappedDocSnap.exists()) {
-        console.log("Document data:", scrappedDocSnap.data());
-        return scrappedDocSnap.data()
-
-      } else {
-        console.log("No such document!");
-        return false
-      }
-  
+    return modes;
   }
+    
+    
+    
+  const getStateDifference = (_aggregation, _oldState, _newState) => {
+    
+    let oldValue = 0
+    let newValue = 0
+    
+    for (let i = 0; i < _oldState.length; i++) {
+      
+      let oldObj = _oldState[i]
+      let newObj = _newState[i] 
+      let trueAggValue = oldObj["aggregation"]
+      
+      if (trueAggValue === _aggregation) { 
+        oldValue = oldObj["rating"]
+        newValue = newObj["rating"]
+        
+        break
+      }
+    }
+    
+    let difference = Math.round(newValue - oldValue)
+    
+    return difference
+    
+  }
+  
+  
+  
+  function getTop10(tweet=[]) {
+    let obj = {};                      
+    let sortable = [];                                              
+    
+    for (let tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
+      let wordArr = tweet[tweetIDX].split(" ")                            
+      
+      wordArr.forEach(function(word) {   
+        if(word !== "") {
+
+          obj[word] = obj[word] ? ++obj[word] : 1;                      
+        }                             
+      });
+    }
+    
+    for (let word in obj) {
+      sortable.push([word, obj[word]]);      
+    }
+    
+    sortable.sort(function(a, b) {                                 
+      return b[1]-a[1];
+    });
+
+    let Top10 = sortable.slice(0, 10);                              
+    
+    for(let arrIDX = 0; arrIDX < 10; arrIDX++){  
+
+      Top10[arrIDX] = Object.assign({'word':Top10[arrIDX][0],'occurences':Top10[arrIDX][1]});
+    }
+    
+    return Top10;
+  }
+
+
+
+  function getSentimentScore(_sentimentList) {
+    let counter = 0;
+    
+    for (var sentimentIDX = 0; sentimentIDX < _sentimentList.length; sentimentIDX++){
+        if (_sentimentList[sentimentIDX] == 'positive'){
+            counter++
+        }
+    }
+
+    let score = (counter / _sentimentList.length) * 100
+    return score
+  } 
+
+
+
+  async function getScrappedData(_collectionName, _documentName) {
+
+    let scrappedDoc = doc(firestoreDB, _collectionName, _documentName)
+    const scrappedDocSnap = await getDoc(scrappedDoc);
+
+    if (scrappedDocSnap.exists()) {
+      console.log("Document data:", scrappedDocSnap.data());
+      return scrappedDocSnap.data()
+
+    } else {
+      console.log("Document: ", _documentName, "not found!");
+      return false
+    }
+
+}
 
 
 
   const updateAggregationValues = (_postTextList, setStateFunc) => {
 
-    let postsCount = _postTextList.length
     let avgLength = getAveragePostLength(_postTextList)
     let medianLength = getMedianPostLength(_postTextList)
     let modeLength = getModePostLength(_postTextList)
+    let postsCount = _postTextList.length
 
     let tempState = [...aggregationCardState]
 
@@ -314,40 +313,86 @@ function App() {
 
     setStateFunc(tempState) 
   }
-  
+
+
 
   const updateCardUI = (newData, oldData) => {
 
-    if (newData) {
-      let newTweetsArray = Object.values(newData.Tweet)
-      let oldTweetsArray = Object.values(oldData.Tweet)
-      
-      updateAggregationValues(newTweetsArray, setAggregationCardState)
-      updateAggregationValues(oldTweetsArray, setOldAggregationCardState)
-    }
-    else {
-      updateAggregationValues([], setAggregationCardState)
-      updateAggregationValues([], setOldAggregationCardState)
-    }
+    let newTweetsArray = Object.values(newData.Tweet)
+    let oldTweetsArray = Object.values(oldData.Tweet)
+    
+    updateAggregationValues(newTweetsArray, setAggregationCardState)
+    updateAggregationValues(oldTweetsArray, setOldAggregationCardState)
+
+    updateDailyComparison()
   }
 
 
 
   const updateTop10Values = (_data) => {
     let newTweetsArray = Object.values(_data.Tweet) 
-    setTop10Words(getTop10(newTweetsArray))
+    let top10List = getTop10(newTweetsArray)
+
+    setTop10WordsState(top10List)    
+  }
+
+
+
+  const updateSentimentScore = (_data) => {
+    let sentimentList = Object.values(_data.Sentiment)
+    let sentimentScore = getSentimentScore(sentimentList)
+
+    setSentimentScoreState(sentimentScore)    
+  }
+  
+
+
+  const updateDailyComparison = () => {
+
+    let avgComparison = getStateDifference("Average", oldAggregationCardState, aggregationCardState)
+    let medianComparison = getStateDifference("Median", oldAggregationCardState, aggregationCardState)
+    let modeComparison = getStateDifference("Mode", oldAggregationCardState, aggregationCardState)
+    let countComparison = getStateDifference("Count", oldAggregationCardState, aggregationCardState)
+
+    let tempState = {...dailyComparisonState}
+
+    tempState.average = avgComparison
+    tempState.median = medianComparison
+    tempState.mode = modeComparison
+    tempState.count = countComparison
+    
+    setDailyComparisonState(tempState)
   }
 
 
 
   useEffect( async () => {
-    let currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
-    let oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
+    var currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
+    var oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
 
-    updateCardUI(currentScrappedData, oldScrappedData)
-    updateTop10Values(currentScrappedData)
+    try {
+
+      if (currentScrappedData) {
+        updateTop10Values(currentScrappedData)
+        updateSentimentScore(currentScrappedData)
+      }
+  
+      if (currentScrappedData && oldScrappedData) {
+        updateCardUI(currentScrappedData, oldScrappedData)
+      }
+    }
+    catch(err) {
+      console.log(err)
+    }
+
 
   }, [])
+
+
+
+  useEffect(() => {
+    updateDailyComparison()
+  }, [aggregationCardState, oldAggregationCardState])
 
 
 
@@ -365,12 +410,11 @@ function App() {
 
             <Routes>
               <Route path="/analytics" element={<Home />} />
-              <Route path="/emotion" element={<Emotion CircularBar={SentimentScore}/>} />
+              <Route path="/emotion" element={<Emotion sentimentScoreState={sentimentScoreState} />} />
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
-                                                  oldAggCardState={oldAggregationCardState}
                                                   weeklyAvgList={weeklyAvgTextLength}
-                                                  top10List={top10Words}
-                                                  comparisonFunc={getStateDifference}  />} />
+                                                  top10State={top10WordsState}
+                                                  dailyComparisonState={dailyComparisonState}  />} />
             </Routes>
           </div>
         </div>

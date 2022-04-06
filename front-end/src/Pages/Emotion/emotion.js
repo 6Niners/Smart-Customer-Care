@@ -1,12 +1,12 @@
 import "./emotion.css"
+import CircularBar from "../../Components/Featured Components/Circular Bar/circular_bar";
 
-import SearchIcon from '@material-ui/icons/Search';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import ProgressBar from "../../Components/Featured Components/Progress Bar/progress_bar";
-
+import { useState } from "react";
 
 
-const EmotionPage = ({CircularBar},) => {
+
+const Emotion = ({ sentimentScoreState }) => {
+
 
     return (
         <div id="emotion-showcase">
@@ -17,10 +17,10 @@ const EmotionPage = ({CircularBar},) => {
                         <h5 className="title-primary mb-4">Emotion Analyser</h5>
                         
                         <div id="progress-bar">
-                            <ProgressBar data = {CircularBar}/>
+                            <CircularBar data={sentimentScoreState} />
                         </div>
 
-                        <a class="btn btn-primary-color mt-4">Get Sentiment Score</a>
+                        <a className="btn btn-primary-color mt-4"> Get Sentiment Score</a>
                     </div>
                 </div>
                 <div className="col-sm-4"> </div>
@@ -30,4 +30,4 @@ const EmotionPage = ({CircularBar},) => {
 }
 
 
-export default EmotionPage
+export default Emotion

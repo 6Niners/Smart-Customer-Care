@@ -11,7 +11,7 @@ function scale (number, inMin, inMax, outMin, outMax) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const ProgressBar = ({data}) => {
+const CircularBar = ({ data }) => {
 
 let score =  Math.round(scale(data,0,100,-1,1) * 100) / 100                       
 let unscaledScore = data
@@ -39,4 +39,4 @@ return (
   )
 }
 
-export default ProgressBar
+export default CircularBar
