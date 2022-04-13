@@ -17,7 +17,7 @@ def Upload_Data(df):
     now = str(now)
     keyword= "فودافون"
     document_name = keyword+now
-    tweets= db.collection(u'Twitter Data Before Modelling').document(document_name).set(df)
+    tweets= db.collection(u'Twitter Data Before Modelling').document(document_name).set(json.loads(json.dumps(df.to_dict())))
     
     #now1 = datetime.now()
     #now1 = str(now1)
