@@ -256,14 +256,21 @@ function App() {
 
   function getSentimentScore(_sentimentList) {
     let counter = 0;
-    
+    let length = 0;
+
     for (var sentimentIDX = 0; sentimentIDX < _sentimentList.length; sentimentIDX++){
-        if (_sentimentList[sentimentIDX] == 'positive'){
-            counter++
-        }
+      if (_sentimentList[sentimentIDX] == 'neutral') {
+        continue
+      }
+
+      if (_sentimentList[sentimentIDX] == 'positive'){
+          counter++
+      }
+
+      length++
     }
 
-    let score = (counter / _sentimentList.length) * 100
+    let score = (counter / length) * 100
     return score
   } 
 
@@ -282,8 +289,7 @@ function App() {
       console.log("Document: ", _documentName, "not found!");
       return false
     }
-
-}
+  }
 
 
 

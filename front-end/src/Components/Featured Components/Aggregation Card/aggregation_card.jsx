@@ -1,6 +1,5 @@
 import "./aggregation_card.css"
 
-
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import DownwardUpwardIcon from '@material-ui/icons/ArrowDownward';
 
