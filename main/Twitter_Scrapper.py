@@ -83,9 +83,9 @@ def get_df_for_day_before(df):
     return temp
 
 
-def Get_Scrapped_Data():
+def Get_Scrapped_Data(searchKeyword):
     api= authentication("config.ini")
-    df = get_data(api, "فودافون")
+    df = get_data(api, searchKeyword)
     df["Tweet"] = df["Tweet"].apply(replace_New_Line)
     df["Tweet"]= remove_punc(df['Tweet'])
     df["day"]= extract_date(df["Time"])

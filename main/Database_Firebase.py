@@ -1,30 +1,62 @@
 import json
 import firebase_admin
-from datetime import datetime
+from datetime import datetime, timedelta
 from firebase_admin import credentials
 from firebase_admin import firestore
 
 
-def Upload_Data(df):
+
+def getPastDateAndTime(daysBefore):
+    currentDate = str(datetime.now() - timedelta(days = daysBefore)) 
+    splitDateList = currentDate.split(" ")
+    dateOnly = splitDateList[0]
+    timeOnly = splitDateList[1].split(".")[0]
+    dateWithTime = dateOnly + " " + timeOnly
+
+    return [dateOnly, dateWithTime]
+
+
+
+def getFirebaseAuth():
     CredNew = credentials.Certificate('smartcc-960f7-firebase-adminsdk-ijo0i-27aa89d85e.json')
     new = firebase_admin.initialize_app(CredNew,name="new")
-
     db = firestore.client(new)
-    #data1= json.loads(json.dumps(df[0:2500].to_dict()))
-    #data2= json.loads(json.dumps(df[2500:].to_dict()))
 
-    now = datetime.now()
-    now = str(now)
-    keyword= "فودافون"
-    #t=df["date"].unique()[0]
-    #date = t.strftime('%m/%d/%Y')
-    #df = df.drop(columns=['date'])
-    document_name = keyword+now
-    tweets= db.collection(u'Twitter Data Before Modelling').document(document_name).set(json.loads(json.dumps(df.to_dict())))
+    return db
+
+
+
+def uploadDataToFirebase (collectionName, searchKeyword, df, dataLimit):
+    dfLength = df.shape[0]
+    iterationCount = 1
+    minLimit = 0
+    maxLimit = None
     
-    #now1 = datetime.now()
-    #now1 = str(now1)
-    #document_name = keyword+now1
+    if (dfLength > dataLimit):
+        iterationCount = int(dfLength / dataLimit) + 1
 
-    #tweets1= db.collection(u'Twitter Data Before Modelling').document(now1).set(data2)
+    for i in range(0, iterationCount):
+
+        firebaseData = {}
+
+        if (iterationCount == 1):
+            firebaseData = json.loads(json.dumps(df[0:].to_dict()))
+        else:
+            if (i == (iterationCount - 1)):
+                maxLimit = None
+            else:
+                maxLimit = dataLimit * (i + 1)
+                
+            minLimit = dataLimit * i 
+
+            firebaseData = json.loads(json.dumps(df[minLimit:maxLimit].to_dict()))
+
+        currentDate, currentDateAndTime = getPastDateAndTime(1)
+        fbAuth = getFirebaseAuth()
+
+        fbAuth.collection(collectionName).document(searchKeyword).collection(currentDate).document(currentDateAndTime).set(firebaseData)
+
+    
+
+    
     
