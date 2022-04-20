@@ -7,13 +7,13 @@ from firebase_admin import firestore
 
 
 def getPastDateAndTime(daysBefore):
-    PastDate = str(datetime.now() - timedelta(days = daysBefore)) 
-    splitDateList = PastDate.split(" ")
+    pastDate = str(datetime.now() - timedelta(days = daysBefore)) 
+    splitDateList = pastDate.split(" ")
     dateOnly = splitDateList[0]
     timeOnly = splitDateList[1].split(".")[0]
-    dateWithTime = dateOnly + " " + timeOnly
+    #dateWithTime = dateOnly + " " + timeOnly
 
-    return [dateOnly, dateWithTime]
+    return [dateOnly, timeOnly]
 
 
 
@@ -51,10 +51,10 @@ def uploadDataToFirebase (collectionName, searchKeyword, df, dataLimit):
 
             firebaseData = json.loads(json.dumps(df[minLimit:maxLimit].to_dict()))
 
-        PastDate, timeOnly = getPastDateAndTime(1)
+        pastDate, timeOnly = getPastDateAndTime(1)
         fbAuth = getFirebaseAuth()
 
-        fbAuth.collection(collectionName).document(searchKeyword).collection(PastDate).document(timeOnly).set(firebaseData)
+        fbAuth.collection(collectionName).document(searchKeyword).collection(pastDate).document(timeOnly).set(firebaseData)
 
     
 
