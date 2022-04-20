@@ -13,7 +13,9 @@ class Morphological_Analysis():
     def __init__(self, DF, COL):
         self.df = DF
         self.col = COL
-        
+        self.mled = MLEDisambiguator.pretrained()
+        self.tagger = DefaultTagger(self.mled, 'pos')
+        self.mapping = {}
 
     def del_nonAR(self):
         for rows in self.df[self.col]:
@@ -21,7 +23,8 @@ class Morphological_Analysis():
                 if char not in AR_LETTERS_CHARSET and char != ' ' :
                     self.df[self.col] = self.df[self.col].str.replace(char, '')
         return self.df
-                    
+
+    '''                
     def get_lex(self):
         
         db = MorphologyDB.builtin_db('calima-egy-r13')
@@ -39,8 +42,28 @@ class Morphological_Analysis():
             print(lex_sentence)
             self.df[self.col] = self.df[self.col].str.replace(rows, lex_sentence)
         return self.df
+    '''
+
+    def replace_rows(self, rows):
+        Cleaned_Sent = ' '
+        Split_Sent = rows.split()
+
+        for words in Split_Sent:
+
+            if words in self.mapping:
+                Tags = self.mapping[words]
+            else:
+                Tags = self.tagger.tag(words.split())
+                self.mapping[words] = Tags
+
+            if Tags[0] != 'conj' and Tags[0] != 'prep':
+                Cleaned_Sent = Cleaned_Sent + words + " "
+        return Cleaned_Sent
     
-            
+    def del_stopwords(self):
+        self.df[self.col] = self.df[self.col].apply(self.replace_rows)
+        return self.df
+
 class Sentiment_Analysis:
     
     def __init__(self, DF, COL):
@@ -63,6 +86,7 @@ def Text_Normalization(df, col):
 
     Morph = Morphological_Analysis(df, col)
     Morph.del_nonAR()
+    Morph.del_stopwords()
 
     df.fillna(value=" ", inplace=True)
 
