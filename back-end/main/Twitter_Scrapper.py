@@ -90,7 +90,7 @@ def Get_Scrapped_Data(searchKeyword):
     df["Tweet"]= remove_punc(df['Tweet'])
     df["day"]= extract_date(df["Time"])
     df = df.drop(columns=['Time'])
-    df = df.drop(columns=['day'])
     df = get_df_for_day_before(df)
+    df = df.drop(columns=['day'])
     return df
 
