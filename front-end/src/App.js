@@ -3,7 +3,9 @@ import Topbar from "./Components/Topbar/topbar"
 import Home from "./Pages/Home/home"
 import Emotion from "./Pages/Emotion/emotion"
 import Analytics from "./Pages/Analytics/analytics"
+import Scrapper from "./Pages/Scrapper/scrapper"
 import firestoreDB  from "./Api/firebase"
+import axios from "axios"
 
 import { collection, doc, Firestore, getDocs, getDoc, onSnapshot, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react";
@@ -402,6 +404,15 @@ function App() {
 
 
 
+  const addKeywordToServer = (_keyword) => {
+    axios.post("http://localhost:8000/api/keyword", {keyword : _keyword})
+      .then((resp) => {
+        console.log(resp)
+      })
+  }
+
+
+
   return (
     
     <Router>
@@ -416,6 +427,7 @@ function App() {
 
             <Routes>
               <Route path="/analytics" element={<Home />} />
+              <Route path="/scrapper" element={<Scrapper addKeywordToServer={addKeywordToServer}/>} />
               <Route path="/emotion" element={<Emotion sentimentScoreState={sentimentScoreState} />} />
               <Route path="/" element={<Analytics aggCardState={aggregationCardState}
                                                   weeklyAvgList={weeklyAvgTextLength}

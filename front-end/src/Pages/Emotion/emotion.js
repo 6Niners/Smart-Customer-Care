@@ -1,8 +1,6 @@
 import "./emotion.css"
 import CircularBar from "../../Components/Featured Components/Circular Bar/circular_bar";
 
-import { useState } from "react";
-
 
 
 const Emotion = ({ sentimentScoreState }) => {
