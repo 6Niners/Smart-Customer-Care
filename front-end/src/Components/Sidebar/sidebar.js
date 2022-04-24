@@ -46,8 +46,8 @@ const Sidebar = () => {
                             <FavoriteIcon className="sidebar-icon" /> Emotion</a>
                     </li>
                     <li className="nav-item">
-                        <a href="" className="nav-link">
-                        <PollIcon className="sidebar-icon" /> Scraper</a>
+                        <a href="" onClick={() => {navigate("/scrapper")}} className="nav-link">
+                        <PollIcon className="sidebar-icon" /> Scrapper</a>
                     </li>
                 </ul>
             </div>
