@@ -22,6 +22,7 @@ class Morphological_Analysis():
             for char in rows:
                 if char not in AR_LETTERS_CHARSET and char != ' ' :
                     self.df[self.col] = self.df[self.col].str.replace(char, '')
+        self.df = self.df.drop_duplicates(subset = self.col)
         return self.df
 
     '''                
