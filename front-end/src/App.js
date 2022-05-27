@@ -89,31 +89,31 @@ function App() {
   let weeklyAvgTextLength = [
     {
       name: 'Sun',
-      avgLength : 5
+      avgLength : 0
     },
     {
       name: 'Mon',
-      avgLength : 8
+      avgLength : 0
     },
     {
       name: 'Tue',
-      avgLength : 7
+      avgLength : 0
     },
     {
       name: 'Wed',
-      avgLength : 3
+      avgLength : 0
     },
     {
       name: 'Thur',
-      avgLength : 9
+      avgLength : 0
     },
     {
       name: 'Fri',
-      avgLength : 4
+      avgLength : 0
     },
     {
       name: 'Sat',
-      avgLength : 8
+      avgLength : 0
     },
   ]
   
@@ -374,33 +374,33 @@ function App() {
 
 
 
-  useEffect( async () => {
-    var currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
-    var oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
+  // useEffect( async () => {
+  //   var currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
+  //   var oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
 
-    try {
+  //   try {
 
-      if (currentScrappedData) {
-        updateTop10Values(currentScrappedData)
-        updateSentimentScore(currentScrappedData)
-      }
+  //     if (currentScrappedData) {
+  //       updateTop10Values(currentScrappedData)
+  //       updateSentimentScore(currentScrappedData)
+  //     }
   
-      if (currentScrappedData && oldScrappedData) {
-        updateCardUI(currentScrappedData, oldScrappedData)
-      }
-    }
-    catch(err) {
-      console.log(err)
-    }
+  //     if (currentScrappedData && oldScrappedData) {
+  //       updateCardUI(currentScrappedData, oldScrappedData)
+  //     }
+  //   }
+  //   catch(err) {
+  //     console.log(err)
+  //   }
 
 
-  }, [])
+  // }, [])
 
 
 
-  useEffect(() => {
-    updateDailyComparison()
-  }, [aggregationCardState, oldAggregationCardState])
+  // useEffect(() => {
+  //   updateDailyComparison()
+  // }, [aggregationCardState, oldAggregationCardState])
 
 
 
