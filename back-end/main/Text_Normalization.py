@@ -16,13 +16,15 @@ class Morphological_Analysis():
         self.mled = MLEDisambiguator.pretrained()
         self.tagger = DefaultTagger(self.mled, 'pos')
         self.mapping = {}
+        
+    def replace_New_Line(self, String):
+            return String.replace("\n", " ")
 
     def del_nonAR(self):
-        for rows in self.df[self.col]:
-            for char in rows:
-                if char not in AR_LETTERS_CHARSET and char != ' ' :
-                    self.df[self.col] = self.df[self.col].str.replace(char, '')
-        self.df = self.df.drop_duplicates(subset = self.col)
+        self.df[self.col].replace(r'[a-zA-Z|0-9]+', '' , regex=True, inplace= True)
+        self.df[self.col].replace(r'[^\w\s]+', '', regex= True, inplace= True)
+        self.df[self.col] = self.df[self.col].apply(self.replace_New_Line)
+        self.df.drop_duplicates(subset = self.col, inplace= True)
         return self.df
 
     '''                
