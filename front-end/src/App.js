@@ -224,12 +224,13 @@ function App() {
   function getTop10(tweet=[]) {
     let obj = {};                      
     let sortable = [];                                              
-    
+    const filterList = ["مش", "كل", "يا", "ده", "_", "__", "_______________", "___", "", "ان", "لما", "انا", "عشان", "تابع", "انترنت_غير_محدود_فى_مصر", "اللى", "لازم", "ف", "دي", "شركه"]
+
     for (let tweetIDX = 0; tweetIDX < tweet.length; tweetIDX++){   
       let wordArr = tweet[tweetIDX].split(" ")                            
       
       wordArr.forEach(function(word) {   
-        if(word !== "") {
+        if(!filterList.includes(word)) {
 
           obj[word] = obj[word] ? ++obj[word] : 1;                      
         }                             
@@ -250,7 +251,7 @@ function App() {
 
       Top10[arrIDX] = Object.assign({'word':Top10[arrIDX][0],'occurences':Top10[arrIDX][1]});
     }
-    
+  
     return Top10;
   }
 
@@ -278,19 +279,25 @@ function App() {
 
 
 
-  async function getScrappedData(_collectionName, _documentName) {
+  async function getScrappedData(_collectionName, _keyword, _date) {
 
-    let scrappedDoc = doc(firestoreDB, _collectionName, _documentName)
-    const scrappedDocSnap = await getDoc(scrappedDoc);
+    const scrappedDoc = collection(firestoreDB, _collectionName, _keyword, _date)
+    const scrappedDocSnap = await getDocs(scrappedDoc);  
+  
+    if (!scrappedDocSnap.empty) {
+      let docs
 
-    if (scrappedDocSnap.exists()) {
-      console.log("Document data:", scrappedDocSnap.data());
-      return scrappedDocSnap.data()
+      scrappedDocSnap.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+        docs = doc.data()
+      });
 
+      return docs
+      
     } else {
-      console.log("Document: ", _documentName, "not found!");
+      console.log("Document: ", _keyword, "not found!");
       return false
-    }
+    } 
   }
 
 
@@ -374,33 +381,48 @@ function App() {
 
 
 
-  // useEffect( async () => {
-  //   var currentScrappedData = await getScrappedData("test", "2022-03-30 08:49:40.473514")
-  //   var oldScrappedData = await getScrappedData("test", "2022-03-30 13:21:41.010942")
+  const getPastDateAndTime = (_daysBefore) => {
+    const today = new Date()
+    const yesterday = new Date(today)
 
-  //   try {
+    yesterday.setDate(yesterday.getDate() - _daysBefore)
 
-  //     if (currentScrappedData) {
-  //       updateTop10Values(currentScrappedData)
-  //       updateSentimentScore(currentScrappedData)
-  //     }
+    return yesterday.toISOString().split('T')[0]
+  }
+
+
+
+  useEffect( async () => {
+    let currentDate = getPastDateAndTime(1)
+    let previousDate = getPastDateAndTime(2)
+    
+    var currentScrappedData = await getScrappedData("Twitter Data Before Modelling"
+                                                    , "WE", currentDate)
+    var oldScrappedData = await getScrappedData("Twitter Data Before Modelling"
+                                              , "WE", previousDate)
+    try {
+      
+      if (currentScrappedData) {  
+        updateTop10Values(currentScrappedData)
+        updateSentimentScore(currentScrappedData)
+      }
   
-  //     if (currentScrappedData && oldScrappedData) {
-  //       updateCardUI(currentScrappedData, oldScrappedData)
-  //     }
-  //   }
-  //   catch(err) {
-  //     console.log(err)
-  //   }
+      if (currentScrappedData && oldScrappedData) {
+        updateCardUI(currentScrappedData, oldScrappedData)
+      }
+    }
+    catch(err) {
+      console.log(err)
+    }
 
 
-  // }, [])
+  }, [])
 
 
 
-  // useEffect(() => {
-  //   updateDailyComparison()
-  // }, [aggregationCardState, oldAggregationCardState])
+  useEffect(() => {
+    updateDailyComparison()
+  }, [aggregationCardState, oldAggregationCardState])
 
 
 
