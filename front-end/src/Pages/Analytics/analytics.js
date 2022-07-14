@@ -63,14 +63,14 @@ const Analytics = ({ aggCardState, weeklyAvgList, top10State, dailyComparisonSta
         </div>
       </div>
 
-      <div id="avg-length-bar-showcase" className="featured-item">
+      {/* <div id="avg-length-bar-showcase" className="featured-item">
         <div className="row">
           <div className="col-12">
             <h3 className="title-primary">Weekly Average Length</h3>
             <LineGraph data={weeklyAvgList} xAxis='name' yAxis='avgLength'/>
           </div>
         </div>
-      </div>
+      </div> */}
       
       <div id="avg-length-bar-showcase" className="featured-item">
         <div className="row">
