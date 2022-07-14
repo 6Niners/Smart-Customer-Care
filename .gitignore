@@ -41,3 +41,7 @@ node_modules/react/umd/react.profiling.min.js
 package-lock.json
 package.json
 >>>>>>> Development
+front-end/.env
+back-end/main/config.ini
+back-end/main/smartcc-960f7-firebase-adminsdk-ijo0i-27aa89d85e.json
+back-end/main/smartcc-960f7-firebase-adminsdk-ijo0i-27aa89d85e.json
