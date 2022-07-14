@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 node_modules
-=======
 node_modules/.package-lock.json
 node_modules/.bin/loose-envify
 node_modules/.bin/loose-envify.cmd
@@ -40,7 +38,6 @@ node_modules/react/umd/react.production.min.js
 node_modules/react/umd/react.profiling.min.js
 package-lock.json
 package.json
->>>>>>> Development
 front-end/.env
 back-end/main/config.ini
 back-end/main/smartcc-960f7-firebase-adminsdk-ijo0i-27aa89d85e.json
