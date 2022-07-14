@@ -1,0 +1,42 @@
+
+.card-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.rating-container {
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+}
+
+
+.rating {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+
+.rating-comparison {
+  display: flex;
+  margin-left: 1.3rem;
+  font-size: 17px;
+}
+
+
+.positive-arrow {
+  color: green;
+  margin-left: 0.3rem;
+}
+
+.negative-arrow {
+  color: red;
+  margin-left: 0.3rem;
+}
+
+.featured-sub {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--faint-color);
+}
