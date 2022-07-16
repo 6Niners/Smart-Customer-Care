@@ -26,7 +26,8 @@ def getFirebaseAuth():
 
 
 
-def uploadDataToFirebase (collectionName, searchKeyword, df, dataLimit, auth):
+async def uploadDataToFirebase (collectionName, searchKeyword, df, dataLimit, auth):
+    
     dfLength = df.shape[0]
     iterationCount = 1
     minLimit = 0
@@ -59,6 +60,17 @@ def uploadDataToFirebase (collectionName, searchKeyword, df, dataLimit, auth):
         #TODO: add exception to writing
 
         return uploadResponse
+
+
+
+async def uploadTopicDataToFirebase (collectionName, searchKeyword, topicsDict, auth):
+
+    pastDate, timeOnly = getPastDateAndTime(1)
+    fbAuth = auth
+
+    uploadResponse = fbAuth.collection(collectionName).document(searchKeyword).collection(pastDate).document(timeOnly).set(topicsDict)
+    
+    return uploadResponse
         
 
     
