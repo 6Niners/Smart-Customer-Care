@@ -393,8 +393,8 @@ function App() {
 
 
   useEffect( async () => {
-    let currentDate = getPastDateAndTime(1)
-    let previousDate = getPastDateAndTime(2)
+    let currentDate = "2022-07-16"
+    let previousDate = "2022-07-15"
     
     var currentScrappedData = await getScrappedData("Twitter Data Before Modelling"
                                                     , "WE", currentDate)
